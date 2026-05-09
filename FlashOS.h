@@ -61,7 +61,7 @@ struct FlashDevice  {
    unsigned long    toProg;    // Time Out of Program Page Function
    unsigned long   toErase;    // Time Out of Erase Sector Function
 
-   struct FlashSectors sectors[SECTOR_NUM];
+   struct FlashSectors sectors[];
 };
 
 #define FLASH_DRV_VERS (0x0100+VERS)   // Driver Version, do not modify!
