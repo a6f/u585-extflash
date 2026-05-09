@@ -272,6 +272,10 @@
                                        ((MODE) == OSPI_FUNCTIONAL_MODE_AUTO_POLLING)   || \
                                        ((MODE) == OSPI_FUNCTIONAL_MODE_MEMORY_MAPPED))
 
+// Don't spin when querying the time.
+// OSPI_WaitFlagStateUntilTimeout() is patched to ignore time anyway.
+#define HAL_GetTick() (0)
+
 /* Private variables ---------------------------------------------------------*/
 
 /* Private function prototypes -----------------------------------------------*/
@@ -3008,7 +3012,8 @@ static HAL_StatusTypeDef OSPI_WaitFlagStateUntilTimeout(OSPI_HandleTypeDef *hosp
                                                         FlagStatus State, uint32_t Tickstart, uint32_t Timeout)
 {
   /* Wait until flag is in expected state */
-  while ((__HAL_OSPI_GET_FLAG(hospi, Flag)) != State)
+  while ((__HAL_OSPI_GET_FLAG(hospi, Flag)) != State) {}
+  return HAL_OK;
   {
     /* Check for the Timeout */
     if (Timeout != HAL_MAX_DELAY)
