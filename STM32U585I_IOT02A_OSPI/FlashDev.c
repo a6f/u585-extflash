@@ -13,11 +13,11 @@
 
 struct FlashDevice const FlashDevice  =  {
    FLASH_DRV_VERS,             // Driver Version, do not modify!
-   "MX25LM51245G_STM32U585I_IOT02A", // Device Name 
+   "MX25LM51245G_STM32U585I_IOT02A", // Device Name
    EXTSPI,                     // Device Type
    0x70000000,                 // Device Start Address
    0x04000000,                 // Device Size in Bytes (64MB)
-   0x00001000,                 // Programming Page Size 4096 Bytes
+   0x00010000,                 // Programming Page Size (64KB)
    0x00,                       // Reserved, must be 0
    0xFF,                       // Initial Content of Erased Memory
    10000,                      // Program Page Timeout 100 mSec
