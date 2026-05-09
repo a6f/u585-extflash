@@ -22,10 +22,13 @@
 #if defined FLASH_MEM || defined FLASH_OTP
 int Init (unsigned long adr, unsigned long clk, unsigned long fnc)
 {
-  if (Init_OSPI() !=0)
-    return 0;
-  else 
+  if (!Init_OSPI()) {
     return 1;
+  }
+  if (fnc == 3 && BSP_OSPI_NOR_EnableMemoryMappedMode(0)) {
+    return 1;
+  }
+  return 0;
 }
 #endif
 

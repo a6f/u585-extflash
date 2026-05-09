@@ -100,10 +100,6 @@ int Init_OSPI()
   if (BSP_OSPI_NOR_Init(0, &Flash) !=0)
     return 0;
 
-  /* Configure the OSPI in memory-mapped mode */
-  if (BSP_OSPI_NOR_EnableMemoryMappedMode(0) !=0)
-    return 0;
-
   return 1;
 }
 
@@ -114,13 +110,6 @@ int Init_OSPI()
   */
 int MassErase (void)
 {
-  /* Initialize OSPI */
-  if (BSP_OSPI_NOR_DeInit(0) !=0)
-    return 0;
-
-  if (BSP_OSPI_NOR_Init(0, &Flash) !=0)
-    return 0;
-
   /* Erases the entire OSPI memory */
   if (BSP_OSPI_NOR_Erase_Chip(0) !=0)
     return 0;
@@ -142,13 +131,6 @@ int MassErase (void)
 int Write (uint32_t Address, uint32_t Size, uint8_t* buffer)
 {
   Address = Address & 0x0fffffff;
-
-  /* Initialaize OSPI */
-  if (BSP_OSPI_NOR_DeInit(0) !=0)
-    return 0;
-
-  if (BSP_OSPI_NOR_Init(0, &Flash) !=0)
-    return 0;
 
   /* Writes data to the OSPI memory */
   if (BSP_OSPI_NOR_Write(0, buffer, Address, Size) !=0)
@@ -173,13 +155,6 @@ int SectorErase (uint32_t EraseStartAddress ,uint32_t EraseEndAddress)
   EraseEndAddress   &= 0x0FFFFFFF;
   EraseStartAddress = EraseStartAddress -  EraseStartAddress % 0x10000;
 
-  /* Initialaize OSPI */
-  if (BSP_OSPI_NOR_DeInit(0) !=0)
-    return 0;
-
-  if (BSP_OSPI_NOR_Init(0, &Flash) !=0)
-    return 0;
-
   while (EraseEndAddress > EraseStartAddress)
   {
     BlockAddr = EraseStartAddress;
@@ -192,9 +167,6 @@ int SectorErase (uint32_t EraseStartAddress ,uint32_t EraseEndAddress)
 
     EraseStartAddress+=0x10000;
   }
-
-  if (BSP_OSPI_NOR_EnableMemoryMappedMode(0) !=0)
-    return 0;
 
   return 1;
 }
