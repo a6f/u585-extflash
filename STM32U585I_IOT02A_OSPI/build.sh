@@ -1,20 +1,19 @@
 #!/bin/bash
 
-# TODO:  Would like to use
-#
-# -msingle-pic-base \
-# -mpic-data-is-text-relative \
-# -fPIC \
-#   or -fPIE ??
-# -pie \
+# Would like to use
+#   -msingle-pic-base \
+#   -mpic-data-is-text-relative \
+#   -fpic \
+#   -pie \
 #
 # but that attempts a dynamic link.
 # Otherwise PIC doesn't seem to get relocated properly?
 # Init_OSPI() loads &Flash by adding 0x10 to R9, which is wrong.
 #
-# XXX
-# for now, just force
-# -Wl,--section-start PrgCode=0x20000004
+# https://stackoverflow.com/questions/75558729/position-independent-code-gcc-versus-armcc reports this too.
+#
+# For now, just force the load address with:
+#   -Wl,--section-start PrgCode=0x20000004
 
 arm-none-eabi-gcc \
   -ffunction-sections \
